@@ -1,8 +1,112 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿<h1 class="alert alert-success text-center">Welcome to SkyLine</h1>
+@DateTime.Now
+
+@{
+    string company = "Sky Line for Software Solutions";
+    string manager = "Khaled Taha";
+    string email = "info@SkyLine.com";
+    string address = "195 New October, Zahraa Area";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<h2 class="alert alert-info">@company</h2>
+<h3 class="alert alert-warning">@manager</h3>
+<h4 class="alert alert-secondary">
+    Welcome to @company! You can contact us by email @email or visit us at @address
+</h4>
+
+@{
+    Employee emp = new Employee
+            {
+                Id = 1,
+                FullName = "Wael Mahmoud",
+                Position = "Developer",
+                Salary = 12500,
+                BirthDate = new DateTime(1998, 10, 25),
+                JoinDate = new DateTime(2021, 7, 3),
+                IsActive = true
+            };
+}
+
+<dl class="row">
+    <dt class="col-1">Id</dt>
+    <dd class="col-11">@emp.Id</dd>
+    <dt class="col-1">Full Name</dt>
+    <dd class="col-11">@emp.FullName</dd>
+    <dt class="col-1">Position</dt>
+    <dd class="col-11">@emp.Position</dd>
+    <dt class="col-1">Salary</dt>
+    <dd class="col-11">@emp.Salary</dd>
+    <dt class="col-1">Birth Date</dt>
+    <dd class="col-11">@emp.BirthDate</dd>
+    <dt class="col-1">Join Date</dt>
+    <dd class="col-11">@emp.JoinDate</dd>
+    <dt class="col-1">Is Active</dt>
+    <dd class="col-11">@emp.IsActive</dd>
+</dl>
+
+
+@{
+    List<Employee> employees = new List<Employee> {
+                              emp,
+                              new Employee{
+                              Id = 2,
+                              FullName = "Bahaa Ali" ,
+                              Position = "Tester" ,
+                              Salary =  6500,
+                              BirthDate = new DateTime(2000, 1, 17),
+                              JoinDate = new DateTime (2022, 3, 29),
+                              IsActive = true
+                              },
+                              new Employee{
+                              Id = 3,
+                              FullName = "Osama Mostafa",
+                              Position = "Senior Developer",
+                              Salary = 15000,
+                              BirthDate = new DateTime(1997, 2, 27),
+                              JoinDate = new DateTime(2020, 1, 22),
+                              IsActive = true
+                              }
+
+    };
+}
+
+
+<ul class="list-group col-4">
+
+    <li class="list-group-item active">Employees</li>
+    @foreach (Employee employee in employees)
+    {
+        <li class="list-group-item list-group-item-action">@employee.FullName (@employee.Position)</li>
+    }
+</ul>
+
+
+<br />
+<br />
+<br />
+<br />
+
+@if (employees.Count() > 0)
+{
+    <table class="table table-bordered table-striped table-hover">
+        <thead>
+            <tr><th>Id</th><th>Full Name</th><th>Position</th><th>Salary</th></tr>
+        </thead>
+        <tbody>
+            @foreach (var employee in employees)
+            {
+                <tr><td>@employee.Id</td><td>@employee.FullName</td><td>@employee.Position</td><td>@employee.Salary</td></tr>
+            }
+        </tbody>
+        <tfood>
+            <tr>
+                <th colspan="3" style="text-align:right">Total</th>
+                <th>@employees.Sum(emp=>emp.Salary)</th>
+            </tr>
+        </tfood>
+    </table>
+}
+else
+{
+    <h1 class="alert alert-danger text-center">There is no data.</h1>
+}
